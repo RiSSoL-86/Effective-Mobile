@@ -67,6 +67,61 @@ make run              # start the dev server on http://localhost:8000
 | Swagger UI  | http://localhost:8000/api/docs/      |
 | OpenAPI JSON| http://localhost:8000/api/schema.json |
 
+## Auth flow
+
+There are **two ways to obtain a token**:
+
+- **Mobile API** (`/api/mobile/...`) — the app flow: device-bound + OTP, issues
+  OAuth2 tokens tied to a specific device. This is what the client app uses.
+- **OAuth2 endpoints** (`/oauth2/...`) — the raw OAuth2 token endpoint
+  (`token/`, `revoke_token/`, `introspect/`, `swagger-token/`). Plain password
+  grant by `client_id`/`secret`, no device/OTP. Used to authorize Swagger UI
+  and for service-to-service integrations.
+
+> Prerequisite: an OAuth2 **Application** (grant type `password`) must exist —
+> create it in the admin panel. Its `client_id` is sent as the `CLIENT-ID`
+> header to mobile auth endpoints.
+
+### First-time registration (mobile)
+
+1. **Init device** — `POST /api/mobile/devices/init/`
+   headers `X-DEVICE-ID`, `FIREBASE-TOKEN`; body `osName, appVersion, osVersion,
+   model, language`. → returns device `id` (UUID).
+   *This UUID is the `DEVICE-ID` header for every call below.*
+2. **Send OTP** — `POST /api/mobile/otp/send/`
+   header `DEVICE-ID`; body `{ email }`. → returns `otpToken`.
+   (`429` if a code is still active → use `/api/mobile/otp/resend/`.)
+3. **Verify OTP** — `POST /api/mobile/otp/verify/`
+   body `{ otpToken, code }`. → `{ verified: true }`. *(local/test code: `1111`)*
+4. **Sign up** — `POST /api/mobile/auth/signup/`
+   headers `DEVICE-ID` + `CLIENT-ID`; body `{ otpToken, firstName, lastName,
+   password, passwordRepeat }`. → `{ email, accessToken, refreshToken }`.
+   *(email is taken from the verified OTP, not the body)*
+
+### Returning user
+
+- **Sign in** — `POST /api/mobile/auth/signin/`
+  headers `DEVICE-ID` + `CLIENT-ID`; body `{ email, password }`. → token pair.
+  *(no OTP needed)*
+- **Refresh** — `POST /api/mobile/auth/refresh/`
+  header `DEVICE-ID`; body `{ refreshToken }`. → new pair (old refresh revoked).
+- **Logout** — `POST /api/mobile/auth/logout/`
+  `Authorization: Bearer <access>` + `DEVICE-ID`. → `204`, token revoked.
+
+**Authenticated calls** send `Authorization: Bearer <accessToken>` **and** the
+`DEVICE-ID` of the device the token was issued for — a mismatch returns `403`.
+
+## Access summary
+
+| Endpoint | Who | Otherwise |
+|----------|-----|-----------|
+| `devices/init`, `otp/*`, `auth/signup`, `auth/signin`, `auth/refresh` | anyone (device-bound, no login) | — |
+| `auth/logout`, `users/me` (GET/PATCH/DELETE) | the authenticated user (self) | `401` without a valid token |
+| `GET users/{id}` | **admin** or the **user themselves** | another user → `403`; missing id (admin) → `404` |
+| `GET users/` (list all) | **admin only** | regular user → `403` |
+
+> "Admin" = `is_staff = True`.
+
 ## Useful commands
 
 ```bash
