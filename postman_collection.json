@@ -1,0 +1,867 @@
+{
+  "info": {
+    "_postman_id": "5ef80f15-6c8c-47d2-b622-e545a2a1ebaa",
+    "name": "Django Modern Rest",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "35370493"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "mobile",
+          "item": [
+            {
+              "name": "devices",
+              "item": [
+                {
+                  "name": "Init",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Text\", function () {\r",
+                          "    var jsonData = pm.response.json();\r",
+                          "    pm.environment.set(\"device_id\", jsonData.id);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "noauth"
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "X-DEVICE-ID",
+                        "value": "string"
+                      },
+                      {
+                        "key": "FIREBASE-TOKEN",
+                        "value": "string"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"osName\": 1,\n  \"appVersion\": \"string\",\n  \"osVersion\": \"string\",\n  \"model\": \"string\",\n  \"language\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/devices/init/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "devices",
+                        "init",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "auth",
+              "item": [
+                {
+                  "name": "Signup",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Text\", function () {\r",
+                          "    var jsonData = pm.response.json();\r",
+                          "    pm.environment.set(\"access_token\", jsonData.accessToken);\r",
+                          "    pm.environment.set(\"refresh_token\", jsonData.refreshToken);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "DEVICE-ID",
+                        "value": "{{device_id}}"
+                      },
+                      {
+                        "key": "CLIENT-ID",
+                        "value": "{{client_id}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"otpToken\": \"{{otp_token}}\",\n  \"firstName\": \"test\",\n  \"lastName\": \"test\",\n  \"password\": \"{{password}}\",\n  \"passwordRepeat\": \"{{passwordRepeat}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/auth/signup/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "auth",
+                        "signup",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Signin",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Text\", function () {\r",
+                          "    var jsonData = pm.response.json();\r",
+                          "    pm.environment.set(\"access_token\", jsonData.accessToken);\r",
+                          "    pm.environment.set(\"refresh_token\", jsonData.refreshToken);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "DEVICE-ID",
+                        "value": "{{device_id}}"
+                      },
+                      {
+                        "key": "CLIENT-ID",
+                        "value": "{{client_id}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/auth/signin/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "auth",
+                        "signin",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Refresh",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Text\", function () {\r",
+                          "    var jsonData = pm.response.json();\r",
+                          "    pm.environment.set(\"access_token\", jsonData.accessToken);\r",
+                          "    pm.environment.set(\"refresh_token\", jsonData.refreshToken);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "noauth"
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "DEVICE-ID",
+                        "value": "{{device_id}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/auth/refresh/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "auth",
+                        "refresh",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Logout",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "DEVICE-ID",
+                        "value": "{{device_id}}"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/auth/logout/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "auth",
+                        "logout",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "users",
+              "item": [
+                {
+                  "name": "me",
+                  "item": [
+                    {
+                      "name": "Me",
+                      "request": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "DEVICE-ID",
+                            "value": "{{device_id}}"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"firstName\": \"test\",\n  \"lastName\": \"test\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{base_url}}/api/mobile/users/me/",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "api",
+                            "mobile",
+                            "users",
+                            "me",
+                            ""
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Me",
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "DEVICE-ID",
+                            "value": "{{device_id}}"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{base_url}}/api/mobile/users/me/",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "api",
+                            "mobile",
+                            "users",
+                            "me",
+                            ""
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Me",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "DEVICE-ID",
+                            "value": "{{device_id}}"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{base_url}}/api/mobile/users/me/",
+                          "host": [
+                            "{{base_url}}"
+                          ],
+                          "path": [
+                            "api",
+                            "mobile",
+                            "users",
+                            "me",
+                            ""
+                          ]
+                        }
+                      },
+                      "response": []
+                    }
+                  ]
+                },
+                {
+                  "name": "User by Id",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "DEVICE-ID",
+                        "value": "{{device_id}}"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/users/1/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "users",
+                        "1",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Users List",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "DEVICE-ID",
+                        "value": "{{device_id}}"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/users/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "users",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "otp",
+              "item": [
+                {
+                  "name": "Send",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Text\", function () {\r",
+                          "    var jsonData = pm.response.json();\r",
+                          "    pm.environment.set(\"otp_token\", jsonData.otpToken);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "DEVICE-ID",
+                        "value": "{{device_id}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"{{email}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/otp/send/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "otp",
+                        "send",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Verify",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "DEVICE-ID",
+                        "value": "{{device_id}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"otpToken\": \"{{otp_token}}\",\n  \"code\": 1111\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/otp/verify/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "otp",
+                        "verify",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Resend",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Text\", function () {\r",
+                          "    var jsonData = pm.response.json();\r",
+                          "    pm.environment.set(\"otp_token\", jsonData.otpToken);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "DEVICE-ID",
+                        "value": "{{device_id}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"otpToken\": \"{{otp_token}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{base_url}}/api/mobile/otp/resend/",
+                      "host": [
+                        "{{base_url}}"
+                      ],
+                      "path": [
+                        "api",
+                        "mobile",
+                        "otp",
+                        "resend",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "oauth2",
+      "item": [
+        {
+          "name": "Oauth2Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Auth is present\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.environment.set(\"access_token\", jsonData.accessToken);\r",
+                  "    pm.environment.set(\"refresh_token\", jsonData.refreshToken);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "{{grant_type}}",
+                  "type": "text",
+                  "uuid": "40d091b6-aeed-4232-b636-886401ab0859"
+                },
+                {
+                  "key": "client_id",
+                  "value": "{{client_id}}",
+                  "type": "text",
+                  "uuid": "c2eca293-50aa-4cd1-bdc1-cde96a358c67"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "{{client_secret}}",
+                  "type": "text",
+                  "uuid": "bba6c515-b1ec-431f-92da-8f04cd7131ac",
+                  "disabled": true
+                },
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "text",
+                  "uuid": "5fdb43ed-03f0-4e9b-8079-05fff1198709"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "text",
+                  "uuid": "9cac31ec-21f4-4839-932d-31e56b70da97"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/oauth2/token/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "token",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Oauth2Revoke Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "client_id",
+                  "value": "{{client_id}}",
+                  "type": "text",
+                  "uuid": "4abca851-fc73-46f5-a22b-b668b8326ec1"
+                },
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "text",
+                  "uuid": "7d7b3a1b-5749-4966-80e3-74fcd7a047e0"
+                },
+                {
+                  "key": "token_type_hint",
+                  "value": "access_token",
+                  "type": "text",
+                  "uuid": "506060d6-8942-442e-bb8f-10de04092837"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/oauth2/revoke_token/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "revoke_token",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Oauth2Introspect Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "text",
+                  "uuid": "58e35317-d852-448f-9f00-e07676b78b48"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/oauth2/introspect/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "oauth2",
+                "introspect",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/"
+    }
+  ]
+}
