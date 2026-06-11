@@ -1,0 +1,70 @@
+DEBUG = config["base"]["debug"]
+
+# preventing DEBUG mode for non-local environment
+if DEBUG and ENVIRONMENT != ENVIRONMENT_LOCAL:
+    raise ValueError("DEBUG mode should be disabled for non-local environment")
+
+SECRET_KEY = config["base"]["secret_key"]
+
+ALLOWED_HOSTS = config["base"]["allowed_hosts"]
+
+CSRF_TRUSTED_ORIGINS = config["base"]["csrf_trusted_origins"]
+
+# Middleware configuration
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "oauth2_provider.middleware.OAuth2TokenMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [
+            BASE_DIR / "templates",
+        ],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+
+ROOT_URLCONF = "django_project.urls"
+
+WSGI_APPLICATION = "django_project.wsgi.application"
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+FORCE_SCRIPT_NAME = config["base"]["script_name"]
+
+if FORCE_SCRIPT_NAME:
+    SESSION_COOKIE_PATH = f"{FORCE_SCRIPT_NAME}/"
+
+SILENCED_SYSTEM_CHECKS = ["auth.E003"]
+
+# Project-specific settings
+SITE_URL = config["base"]["site_url"]
+PROJECT_NAME = config["base"]["project_name"]
+DOMAIN_NAME = SITE_URL
+
+# OTP settings
+OTP_CODE_LIFETIME = 15
+OTP_DEBUG = DEBUG
+OTP_DEBUG_CODE = 1111
+OTP_TEST_EMAILS_SET = frozenset()
+
+# DMR settings
+DMR_SETTINGS = {
+    "global_error_handler": "services.api.common.errors.api_error_handler",
+}

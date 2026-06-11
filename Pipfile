@@ -1,0 +1,32 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==6.0.5"
+django-modern-rest = {version = "==0.9.0", extras = ["openapi", "jwt"]}
+pydantic = ">=2.10.0"
+django-split-settings = "==1.3.2"
+django-filter = "==25.2"
+django-oauth-toolkit = "==3.2.0"
+sentry-sdk = "==2.59.0"
+pillow = "==12.2.0"
+psycopg2 = {version = "==2.9.12", markers = "sys_platform != 'darwin'"}
+psycopg2-binary = {version = "==2.9.12", markers = "sys_platform == 'darwin'"}
+celery = "==5.6.3"
+redis = "==7.4.0"
+
+[dev-packages]
+ruff = "==0.13.2"
+mypy = "==1.15.0"
+django-stubs = "==6.0.4"
+celery-types = "==0.26.0"
+pre-commit = "==4.6.0"
+pytest = "==9.0.3"
+pytest-django = "==4.12.0"
+faker = "==40.15.0"
+factory-boy = "==3.3.3"
+
+[requires]
+python_version = "3.12"

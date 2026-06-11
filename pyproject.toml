@@ -1,0 +1,65 @@
+# --- RUFF (Linter & Formatter) ---
+[tool.ruff]
+line-length = 79
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = []
+
+[tool.ruff.lint.extend-per-file-ignores]
+"**/migrations/**.py" = ["E", "F", "I"]
+"src/django_project/settings/*.py" = ["F821"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+exclude = ["**/migrations/**.py"]
+
+# --- MYPY (Type Checking) ---
+[tool.mypy]
+python_version = "3.12"
+plugins = ["mypy_django_plugin.main"]
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = true
+mypy_path = "src"
+
+[tool.django-stubs]
+django_settings_module = "django_project.settings"
+
+# Ignoring errors in specific modules and tests
+[[tool.mypy.overrides]]
+module = [
+    "apps.users.*",
+    "django_project.settings.*",
+    "apps.*.migrations.*",
+    "apps.*.tests.*",
+    "services.oauth2_extensions.*",
+]
+ignore_errors = true
+
+# Ignoring missing types in external libraries
+[[tool.mypy.overrides]]
+module = [
+    "oauth2_provider.*",
+    "dmr.*",
+]
+ignore_missing_imports = true
+
+# --- PYTEST ---
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "django_project.settings"
+python_files = ["test_*.py"]
+addopts = "--reuse-db"
